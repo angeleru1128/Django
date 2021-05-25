@@ -1,0 +1,9 @@
+{% extends 'reviews/base.html' %}
+
+{% block content %}
+    <p>{{ review.stone_name }}のレビューを消去します、よろしいですか</p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit">削除</button>
+    </form>
+{% endblock %}
