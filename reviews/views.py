@@ -1,19 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Review
 from .forms import ReviewCreateForm
-
+from django.views import generic
 
 # Create your views here.
+class ReviewList(generic.ListView):
+    model = Review
 
 def review_list(request):
-
     context = {
         'review_list': Review.objects.all().order_by('-created_at'),
     }
-    return render(request, 'reviews/reviews_list.html', context)
+    return render(request, 'reviews/review_list.html', context)
+
 def review_detail(request, pk):
     context = {
-       'review': get_object_or_404(Review, pk=pk)
+        'review': get_object_or_404(Review, pk=pk)
     }
     return render(request, 'reviews/review_detail.html', context)
 
@@ -23,11 +25,10 @@ def review_create(request):
     if request.method == 'POST' and form.is_valid():
             form.save()
             return redirect('reviews:review_list')
-
     context = {
         'form': form
     }
-    return render(request, 'reviews/review_form.html', context)
+    return render(request, 'reviews/reviews_form.html', context)
 
 def review_update(request, pk):
     review = get_object_or_404(Review, pk=pk)
@@ -35,7 +36,6 @@ def review_update(request, pk):
     if request.method == 'POST' and form.is_valid():
         form.save()
         return redirect('reviews:review_list')
-
     context = {
         'form': form
     }
