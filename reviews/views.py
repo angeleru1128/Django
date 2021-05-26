@@ -13,11 +13,16 @@ def review_list(request):
     }
     return render(request, 'reviews/review_list.html', context)
 
+
+class ReviewDetail(generic.DetailView):
+    model = Review
+
 def review_detail(request, pk):
     context = {
         'review': get_object_or_404(Review, pk=pk)
     }
     return render(request, 'reviews/review_detail.html', context)
+
 
 #口コミ作成ページが表示される
 def review_create(request):
