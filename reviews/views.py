@@ -37,6 +37,11 @@ def review_create(request):
     }
     return render(request, 'reviews/reviews_form.html', context)
 
+class ReviewUpdate(generic.UpdateView):
+    model = Review
+    form_class = ReviewCreateForm
+    success_url = reverse_lazy('reviews:review_list')
+
 def review_update(request, pk):
     review = get_object_or_404(Review, pk=pk)
     form = ReviewCreateForm(request.POST or None, instance=review)
@@ -47,6 +52,11 @@ def review_update(request, pk):
         'form': form
     }
     return render(request, 'reviews/review_form.html', context)
+
+class ReviewDelete(generic.DeleteView):
+    model = Review
+    success_url = reverse_lazy('reviews:review_list')
+
 
 def review_delete(request, pk):
     review = get_object_or_404(Review, pk=pk)
